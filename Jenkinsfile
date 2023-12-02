@@ -22,7 +22,9 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                      sh 'python3 hello.py'
+                        dir('hello-world-py') {
+                          sh 'python3 hello.py'
+                      }
                 }
             }
         }
