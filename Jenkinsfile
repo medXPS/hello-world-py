@@ -22,15 +22,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Set up Python virtual environment
-                    sh 'python3 -m venv venv'
-                    sh 'source venv/bin/activate'
-
-                    // Install project dependencies (if any)
-                    sh 'pip install -r hello-world-py/requirements.txt'
-
-                    // Run the Python executable file (hello.py)
-                    sh 'python hello-world-py/hello.py'
+                      sh 'python3 hello.py'
                 }
             }
         }
