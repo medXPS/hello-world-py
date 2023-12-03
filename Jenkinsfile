@@ -54,6 +54,7 @@ pipeline {
                         dockerImage.push("latest")
                     }
                 }
+                slackSend message: 'New Artifact was Pushed to ACR Repo'
             }
         }
     }
