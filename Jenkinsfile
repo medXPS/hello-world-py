@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        registryName = "acr017h3w873rnwuqwuh/scraping-api"
+        registryCredential = 'ACR'
+        dockerImage = ''
+        registryUrl = 'acr017h3w873rnwuqwuh.azurecr.io'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -22,9 +29,30 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                        dir('hello-world-py') {
-                          sh 'python3 hello.py'
-                      }
+                    dir('hello-world-py') {
+                        sh 'python3 hello.py'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                script {
+                    dir('hello-world-py') {
+                        // Assuming Dockerfile is present in the repository
+                        dockerImage = docker.build(registryName, "-f Dockerfile .")
+                    }
+                }
+            }
+        }
+
+        stage('Push Image to ACR with "latest" tag') {
+            steps {
+                script {
+                    docker.withRegistry("http://${registryUrl}", registryCredential) {
+                        dockerImage.push("latest")
+                    }
                 }
             }
         }
