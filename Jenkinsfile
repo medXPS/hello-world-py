@@ -35,6 +35,17 @@ pipeline {
                 }
             }
         }
+         stage('Run SonarQube Analysis') {
+            steps {
+                script {
+                    dir('hello-world-py') {
+                        withSonarQubeEnv('SonarQubeServer') {
+                            sh "${sonarQubeScannerHome}/bin/sonar-scanner"
+                        }
+                    }
+                }
+            }
+        }
 
         stage('Build Docker image') {
             steps {
