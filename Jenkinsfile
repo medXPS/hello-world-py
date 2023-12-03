@@ -6,6 +6,7 @@ pipeline {
         registryCredential = 'ACR'
         dockerImage = ''
         registryUrl = 'acr017h3w873rnwuqwuh.azurecr.io'
+        sonarQubeScannerTool = 'SonarQube Scanner 2.16.1'
     }
 
     stages {
@@ -35,19 +36,17 @@ pipeline {
                 }
             }
         }
-        stage('Run SonarQube Analysis') {
-    steps {
+        stage('SonarQube analysis') {
+      steps {
         script {
-            dir('hello-world-py') {
-                 
-                // Update 'SonarQubeServer' to the name you configured in Jenkins
-                withSonarQubeEnv('jenkins-sonar') {
-                    sh "python3 hello.py sonar:sonar"
-                }
-            }
+        
+             def scannerHome = tool sonarQubeScannerTool
         }
+        withSonarQubeEnv('SonarQube Scanner') {
+          sh "${scannerHome}/bin/sonar-scanner"
+        }
+      }
     }
-}
 
         stage('Build Docker image') {
             steps {
