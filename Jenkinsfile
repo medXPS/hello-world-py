@@ -47,7 +47,7 @@ pipeline {
             }
         }
 
-        stage('Push Image to ACR with "latest" tag') {
+        stage('Push Image to ACR ') {
             steps {
                 script {
                     docker.withRegistry("http://${registryUrl}", registryCredential) {
