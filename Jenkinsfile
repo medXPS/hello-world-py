@@ -35,17 +35,18 @@ pipeline {
                 }
             }
         }
-         stage('Run SonarQube Analysis') {
-            steps {
-                script {
-                    dir('hello-world-py') {
-                        withSonarQubeEnv('SonarQubeServer') {
-                            sh "${sonarQubeScannerHome}/bin/sonar-scanner"
-                        }
-                    }
+        stage('Run SonarQube Analysis') {
+    steps {
+        script {
+            dir('hello-world-py') {
+                // Update 'SonarQubeServer' to the name you configured in Jenkins
+                withSonarQubeEnv('SonarQubeServer') {
+                    sh "${sonarQubeScannerHome}/bin/sonar-scanner"
                 }
             }
         }
+    }
+}
 
         stage('Build Docker image') {
             steps {
