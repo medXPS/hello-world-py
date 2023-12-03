@@ -6,7 +6,7 @@ pipeline {
         registryCredential = 'ACR'
         dockerImage = ''
         registryUrl = 'acr017h3w873rnwuqwuh.azurecr.io'
-        sonarQubeScannerTool = 'SonarQube Scanner 2.16.1'
+  
     }
 
     stages {
@@ -40,10 +40,10 @@ pipeline {
       steps {
         script {
         
-             def scannerHome = tool sonarQubeScannerTool
+            
         }
         withSonarQubeEnv('SonarQube Scanner') {
-          sh "${scannerHome}/bin/sonar-scanner"
+          sh "/var/opt/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner"
         }
       }
     }
