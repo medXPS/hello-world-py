@@ -39,10 +39,10 @@ pipeline {
     steps {
         script {
             dir('hello-world-py') {
-                  def scannerHome = tool 'SonarQubeScanner'
+                 
                 // Update 'SonarQubeServer' to the name you configured in Jenkins
                 withSonarQubeEnv('jenkins-sonar') {
-                    sh "${sonarQubeScannerHome}/bin/sonar-scanner"
+                    sh "python3 hello.py sonar:sonar"
                 }
             }
         }
